@@ -2,6 +2,10 @@
 
 #ifndef DIO_H_
 #define DIO_H_
+
+#include <REG51F020.H>
+#include "std_macros.h"
+
 /*
 	Function Name        : DIO_vsetPINDir
 	Function Returns     : void
@@ -60,5 +64,5 @@ void DIO_write_port(unsigned char portname,unsigned char portvalue);
 	Function Description : read the value of the port .
 */
 unsigned char DIO_read_port(unsigned char portname);
-#endif
+#endif /* DIO_H_ */
 

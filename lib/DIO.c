@@ -1,8 +1,9 @@
 /*
 *  DIO library for 8051
 */
-#include <REG51F020.H>
-#include "std_macros.h"
+
+#include "DIO.h"
+
 void DIO_vsetPINDir(unsigned char portname, unsigned char pinnumber, unsigned char direction)
 {
 	switch (portname)
