@@ -78,9 +78,17 @@ void timer1_ISR (void) interrupt 3
 overflow_count++;   //Increment the overflow count 
 if (overflow_count == 15*seconds)  // 15 is the magical number which make it accuratly a second//8*
 {
+    <LOGIC>
     P1=0x01;
     timer_close(1);
 }
+}
+
+---------------------------------
+in main:
+main()
+{
+    timer_init(1);
 }
 */
 
