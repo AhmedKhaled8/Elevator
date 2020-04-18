@@ -11,10 +11,9 @@ sbit led2 = P2^1;
 unsigned char up_array[4] = {0, 0, 0, 0};
 unsigned char down_array[4] = {0, 0, 0, 0};
 
-void ex0_isr(void);
+void btn_isr(void);
 void delay(int value); 
 void init(void) ;
-void check_service(void);
 
 unsigned char x, y;
 
@@ -23,7 +22,9 @@ void main(void)
 {
 
     init();    // int_INIT();
-    P1 = 0xff ; // input
+    P1 = 0xff ; // input 
+
+    // For Testing 
     P0 = 0x00 ; // output
     P2 = 0x00 ; // OUT
 
@@ -41,15 +42,32 @@ void init(void){
 
 
 void btn_isr (void) interrupt 0 {
-    // for(x =0; x <= 8; x+=2){
-    //         up_array[x/2]= up_array[x/2] | 1;
-
-    //         // led = 1 ;
-    //         // delay(6000);
-    //         // led = 0 ;
-    // } 
-    check_service();
+    /*
+        interrupt Service Routine 
+        - sets the up and down calls 
+    */
+    unsigned char x, y;
+    // up array check 
+    for(x =0; x <= 8; x+=2){
+        up_array[x/2]= up_array[x/2] | READ_BIT(P1, x);
+        
+        // Testing Lines 
+        // if(up_array[x/2] == 1){
+        //     SET_BIT(P2, x);
+        // }
+    } 
+    
+    // down array check 
+    for(y =1; y <= 8; y+=2){
+        down_array[(y-1)/2]= down_array[(y-1)/2] | READ_BIT(P1, y);
+        
+        // Testing Lines 
+        // if(down_array[(y-1)/2] == 1){
+        //     SET_BIT(P2, y);
+        // }
+    }
 }
+
 
 void delay(int value )   //Delay Function
 {
@@ -58,27 +76,4 @@ void delay(int value )   //Delay Function
     for(j=0;j<=5;j++);
 }
 
-void check_service(void){
-    unsigned char x, y;
-
-    // up array check 
-    for(x =0; x <= 8; x+=2){
-        led = 1 ;
-        delay(6000);
-        led = 0 ;
-        delay(2000);
-        led = 1 ;
-        delay(6000);
-        led = 0 ;
-
-        up_array[x/2]= up_array[x/2] | DIO_u8read('1', x);
-        // DIO_write('2', x, up_array[x/2]);
-    } 
-    
-    // down array check 
-    // for(y =1; y <= 8; y+=2){
-        // down_array[(y-1)/2]= down_array[(y-1)/2] | DIO_u8read('1', y);
-        // DIO_write('2', y, down_array[(y-1)/2]);
-    // }
-}
 
