@@ -1,10 +1,10 @@
 #include "std_macros.h"
 #include "INT.h"
 #include <stdio.h>
-#include <REG51.H>
 #include "INT.h"
 #include "button.h"
 #include "DIO.h"
+#include "REG51F020.h"
 
 sbit led = P2^0;
 sbit led2 = P2^1;
