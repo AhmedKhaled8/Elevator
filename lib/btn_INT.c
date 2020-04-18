@@ -14,7 +14,7 @@ unsigned char down_array[4] = {0, 0, 0, 0};
 void ex0_isr(void);
 void delay(int value); 
 void init(void) ;
-void check_service(unsigned char up_array[], unsigned char down_array[], unsigned char port);
+void check_service(void);
 
 unsigned char x, y;
 
@@ -41,24 +41,15 @@ void init(void){
 
 
 void btn_isr (void) interrupt 0 {
-    unsigned char x;
+    // for(x =0; x <= 8; x+=2){
+    //         up_array[x/2]= up_array[x/2] | 1;
 
-    // led = 1 ;
-    // delay(6000);
-    // led = 0 ;
-    for(x =0; x <= 8; x+=2){
-
-            if(DIO_u8read('1', x) == 0){
-                // up_array[x/2]= up_array[x/2] | 1;
-                // DIO_write("0", x, up_array[x/2]);
-                led = 1 ;
-                delay(6000);
-                led = 0 ;
-            }
-        }
-    } 
-    // check_service(up_array, down_array, '1');
-
+    //         // led = 1 ;
+    //         // delay(6000);
+    //         // led = 0 ;
+    // } 
+    check_service();
+}
 
 void delay(int value )   //Delay Function
 {
@@ -67,20 +58,27 @@ void delay(int value )   //Delay Function
     for(j=0;j<=5;j++);
 }
 
-void check_service(unsigned char up_array[], unsigned char down_array[], unsigned char port){
-        unsigned char x, y;
+void check_service(void){
+    unsigned char x, y;
 
     // up array check 
     for(x =0; x <= 8; x+=2){
-        if (button_u8read(port, x)==0){
-            up_array[x/2]= up_array[x/2] | 1;
-        }
-    }
+        led = 1 ;
+        delay(6000);
+        led = 0 ;
+        delay(2000);
+        led = 1 ;
+        delay(6000);
+        led = 0 ;
+
+        up_array[x/2]= up_array[x/2] | DIO_u8read('1', x);
+        // DIO_write('2', x, up_array[x/2]);
+    } 
+    
     // down array check 
-    for(y =1; y <= 8; y+=2){
-        if (button_u8read(port, y)==0){
-            down_array[(y-1)/2]= down_array[(y-1)/2] | 1;
-        }
-    }
+    // for(y =1; y <= 8; y+=2){
+        // down_array[(y-1)/2]= down_array[(y-1)/2] | DIO_u8read('1', y);
+        // DIO_write('2', y, down_array[(y-1)/2]);
+    // }
 }
 
