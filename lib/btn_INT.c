@@ -36,12 +36,12 @@ void main(void)
 void init(void){
     
 	EA  = 1;	// Enable global interrupt
-	EX0 = 1;    // Enable Ext. interrupt0 
-	IT0 = 1;    // Select Ext. interrupt0 on falling edge 
+	EX1 = 1;    // Enable Ext. interrupt0 
+	IT1 = 1;    // Select Ext. interrupt0 on falling edge 
 }
 
 
-void btn_isr (void) interrupt 0 {
+void btn_isr (void) interrupt 2 {
     /*
         interrupt Service Routine 
         - sets the up and down calls 
@@ -52,19 +52,19 @@ void btn_isr (void) interrupt 0 {
         up_array[x/2]= up_array[x/2] | READ_BIT(P1, x);
         
         // Testing Lines 
-        // if(up_array[x/2] == 1){
-        //     SET_BIT(P2, x);
-        // }
+        if(up_array[x/2] == 1){
+            SET_BIT(P2, x);
+        }
     } 
     
     // down array check 
     for(y =1; y <= 8; y+=2){
-        down_array[((y-1)/2)+1]= down_array[((y-1)/2)+1] | READ_BIT(P1, y);
+        down_array[(y-1)/2]= down_array[(y-1)/2] | READ_BIT(P1, y);
         
         // Testing Lines 
-        // if(down_array[(y-1)/2] == 1){
-        //     SET_BIT(P2, y);
-        // }
+        if(down_array[(y-1)/2] == 1){
+            SET_BIT(P2, y);
+        }
     }
 }
 
