@@ -59,7 +59,7 @@ void btn_isr (void) interrupt 0 {
     
     // down array check 
     for(y =1; y <= 8; y+=2){
-        down_array[(y-1)/2]= down_array[(y-1)/2] | READ_BIT(P1, y);
+        down_array[((y-1)/2)+1]= down_array[((y-1)/2)+1] | READ_BIT(P1, y);
         
         // Testing Lines 
         // if(down_array[(y-1)/2] == 1){
