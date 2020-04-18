@@ -236,6 +236,7 @@ void elevatorDown()
 	timer1Set = 1;
 	moving = 1;
 }
+
 void elevatorStop()
 {
 	breaks('3', 5, 6, 7);
@@ -287,7 +288,6 @@ void ex0_isr (void) interrupt 0
 	
     //P1=0x01;//led on
 	unsigned char i =0;
-	LED_vToggle('1', 3);
     for(i=0; i<5;i++)//LOOPING IN ALL floors button
 	{
 		if(i!=currentFloor)
