@@ -95,12 +95,18 @@ main()
 
 
 
-void delay(unsigned  long int  num)
-{
- unsigned long int j;
- for(j=0;j<1257*5* num;j++);  // for 1s delay //5*1257
-}
+// void delay(unsigned  long int  num)
+// {
+//  unsigned long int j;
+//  for(j=0;j<1257*5* num;j++);  // for 1s delay //5*1257
+// }
 
+void delay(char value )   //Delay Function
+{
+    char i,j;
+    for(i=0;i<=value;i++)
+    for(j=0;j<=5;j++);
+}
 
 
 //another code for delay:
