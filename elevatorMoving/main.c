@@ -21,6 +21,8 @@ void elevatorStop(void);
 
 
 char floorSelected[] = {0, 0, 0, 0, 0};
+unsigned char OpenDoorFlag=0;
+char currentFloor = 0;
 
 
 static unsigned long overflow_count = 0;
@@ -32,16 +34,17 @@ char movingUp = 1;
 char movingDown = 0;
 unsigned char timer1Set = 0;
 char moving = 0;
-char stopped = 1;
-char currentFloor = 0;
+
 
 
 void main()
 {
     int_INIT();
-	seven_seg_vinit('3');
-	seven_seg_write('3', 0);
+	//initialize button
+	seven_seg_vinit('2');
+	seven_seg_write('2', 0);
 	initDCMotor('1', 5, 6, 7);
+
 
 	// UP PUSHBUTTONS INSIDE ELEVATOR
 	button_vInit('0', 0);
@@ -49,16 +52,25 @@ void main()
 	button_vInit('0', 2);
 	button_vInit('0', 3);
 	button_vInit('0', 4);
+	button_vInit('0', 5);
+
+	
+	IT0 = 0;
+    EX0 = 1;
+    EA=1;
+
 
 	// LEDs to check button Readings
 	
-	LED_vInit('2', 1);
-	LED_vInit('2', 2);
-	LED_vInit('2', 3);
+	LED_vInit('1', 0);
+	LED_vInit('1', 1);
+	LED_vInit('1', 2);
+	
 
-	LED_vTurnOff('2', 1);
-	LED_vTurnOff('2', 2);
-	LED_vTurnOff('2', 3);
+	LED_vTurnOff('1', 0);
+	LED_vTurnOff('1', 1);
+	LED_vTurnOff('1', 2);
+
 
 	while(1)
 	{
@@ -123,11 +135,11 @@ char goingUp()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('2', 1);
+		LED_vTurnOn('1', 0);
 	}
 	else
 	{
-		LED_vTurnOff('2', 1);
+		LED_vTurnOff('1', 0);
 	}
 	return state;
 }
@@ -147,11 +159,11 @@ char goingDown()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('2', 3);
+		LED_vTurnOn('1', 2);
 	}
 	else
 	{
-		LED_vTurnOff('2', 3);
+		LED_vTurnOff('1', 2);
 	}
 	return state;
 }
@@ -160,6 +172,8 @@ void move()
 {
 	char upState = 0;
 	char downState = 0;
+	upState = goingUp();
+	downState = goingDown();
 	if(moving==0)
 	{
 		upState = goingUp();
@@ -216,6 +230,7 @@ void elevatorDown()
 void elevatorStop()
 {
 	breaks('1', 5, 6, 7);
+	moving = 0;
 }
 
 
@@ -226,6 +241,7 @@ void timer1_ISR (void) interrupt 3
 	{
 	    timer_close(1);
 		overflow_count=0;
+		moving = 0;
 		elevatorStop();
 		if(movingUp==1)
 		{
@@ -235,14 +251,26 @@ void timer1_ISR (void) interrupt 3
 		{
 			currentFloor--;
 		}
-		seven_seg_write('3', currentFloor);
+		seven_seg_write('2', currentFloor);
 		if(floorSelected[currentFloor] == 1)
 		{
-			LED_vTurnOn('2', 2);
+			LED_vTurnOn('1', 1);
 			delay(5);
-			LED_vTurnOff('2', 2);
+			LED_vTurnOff('1', 1);
 			floorSelected[currentFloor]=0;
 		}
-		moving = 0;
 	}
 }
+
+void ex0_isr (void) interrupt 0
+{
+    //P1=0x01;//led on
+    unsigned char i =0;
+    for(i=0; i<5;i++)//LOOPING IN ALL floors button
+	{
+		if(i!=currentFloor)
+    	floorSelected[i]= floorSelected[i] | button_u8read('0',i);//reading the value of buttons and keeeping it
+	}
+    OpenDoorFlag= OpenDoorFlag|button_u8read('0',5);//reading the value of openDoor and keeeping it
+}
+
