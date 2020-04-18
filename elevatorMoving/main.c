@@ -43,7 +43,7 @@ void main()
 	//initialize button
 	seven_seg_vinit('2');
 	seven_seg_write('2', 0);
-	initDCMotor('1', 5, 6, 7);
+	initDCMotor('3', 5, 6, 7);
 
 
 	// UP PUSHBUTTONS INSIDE ELEVATOR
@@ -62,14 +62,14 @@ void main()
 
 	// LEDs to check button Readings
 	
-	LED_vInit('1', 0);
-	LED_vInit('1', 1);
-	LED_vInit('1', 2);
+	LED_vInit('0', 6);
+	LED_vInit('0', 7);
+	LED_vInit('3', 4);
 	
 
-	LED_vTurnOff('1', 0);
-	LED_vTurnOff('1', 1);
-	LED_vTurnOff('1', 2);
+	LED_vTurnOff('0', 6);
+	LED_vTurnOff('0', 7);
+	LED_vTurnOff('3', 4);
 
 
 	while(1)
@@ -135,11 +135,11 @@ char goingUp()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('1', 0);
+		LED_vTurnOn('0', 6);
 	}
 	else
 	{
-		LED_vTurnOff('1', 0);
+		LED_vTurnOff('0', 7);
 	}
 	return state;
 }
@@ -159,11 +159,11 @@ char goingDown()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('1', 2);
+		LED_vTurnOn('3', 4);
 	}
 	else
 	{
-		LED_vTurnOff('1', 2);
+		LED_vTurnOff('3', 4);
 	}
 	return state;
 }
@@ -212,7 +212,7 @@ void move()
 
 void elevatorUp()
 {
-	rotate_f('1', 5, 6, 7);
+	rotate_f('3', 5, 6, 7);
 	timer_init(1);
 	timer1Set = 1;
 	moving = 1;
@@ -221,7 +221,7 @@ void elevatorUp()
 
 void elevatorDown()
 {
-	rotate_b('1', 5, 6, 7);
+	rotate_b('3', 5, 6, 7);
 	timer_init(1);
 	timer1Set = 1;
 	moving = 1;
@@ -229,7 +229,7 @@ void elevatorDown()
 
 void elevatorStop()
 {
-	breaks('1', 5, 6, 7);
+	breaks('3', 5, 6, 7);
 	moving = 0;
 }
 
@@ -254,9 +254,9 @@ void timer1_ISR (void) interrupt 3
 		seven_seg_write('2', currentFloor);
 		if(floorSelected[currentFloor] == 1)
 		{
-			LED_vTurnOn('1', 1);
+			LED_vTurnOn('0', 7);
 			delay(5);
-			LED_vTurnOff('1', 1);
+			LED_vTurnOff('0', 7);
 			floorSelected[currentFloor]=0;
 		}
 	}
