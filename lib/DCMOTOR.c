@@ -30,10 +30,10 @@ void breaks(unsigned char port, unsigned char pinA, unsigned char pinB, unsigned
 	DIO_write(port, pinE, 0);
 }
 
-void delay()
+void delayM(int seconds)
 {
-	unsigned char i,j,k;
-	for(i=0;i<0x20;i++)
-		for(j=0;j<255;j++)
-		    for(k=0;k<255;k++);
+
+    int i,j;
+    for(i=0;i<=seconds;i++)
+    for(j=0;j<=5;j++);
 }
