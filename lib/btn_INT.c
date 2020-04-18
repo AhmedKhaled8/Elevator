@@ -52,9 +52,9 @@ void btn_isr (void) interrupt 2 {
         up_array[x/2]= up_array[x/2] | READ_BIT(P1, x);
         
         // Testing Lines 
-        if(up_array[x/2] == 1){
-            SET_BIT(P2, x);
-        }
+        // if(up_array[x/2] == 1){
+        //     SET_BIT(P2, x);
+        // }
     } 
     
     // down array check 
@@ -62,9 +62,9 @@ void btn_isr (void) interrupt 2 {
         down_array[(y-1)/2]= down_array[(y-1)/2] | READ_BIT(P1, y);
         
         // Testing Lines 
-        if(down_array[(y-1)/2] == 1){
-            SET_BIT(P2, y);
-        }
+        // if(down_array[(y-1)/2] == 1){
+        //     SET_BIT(P2, y);
+        // }
     }
 }
 
