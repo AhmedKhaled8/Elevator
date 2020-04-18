@@ -1,19 +1,7 @@
-#include <INT.h>
-
-
-
+#include "INT.h"
 void int_INIT(void) {
-    // setting interrupt zero 
-    IT0 = 1 ; // type Edge Sensitive 
-    // PX0 = 1 ; // Set HIGH priority  
-    // setting interrupt one
-    IT1 = 1; // type Edge Sensitive
-    // PX1 = 1 ; // Set HIGH priority  
-    
-    // Enable 
-    // EX0 = 1; 
-    // EA = 1 ;
-    // EX1 = 1 ;
-    IE = 0x85; 
+	EA  = 1;	/* Enable global interrupt */
+	EX0 = 1;      	/* Enable Ext. interrupt0 */
+	IT0 = 1;      	/* Select Ext. interrupt0 on falling edge */
 }
 
