@@ -8,7 +8,7 @@ void initDCMotor(unsigned char port, unsigned char pinA, unsigned char pinB, uns
 void rotate_f(unsigned char port, unsigned char pinA, unsigned char pinB, unsigned char pinE);
 void rotate_b(unsigned char port, unsigned char pinA, unsigned char pinB, unsigned char pinE);
 void breaks(unsigned char port, unsigned char pinA, unsigned char pinB, unsigned char pinEr);
-void delay(void);
+void delayM(int seconds);
 
 
 #endif /* DCMOTOR_H_ */
