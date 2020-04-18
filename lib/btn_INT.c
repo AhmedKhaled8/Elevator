@@ -8,8 +8,8 @@
 
 sbit led = P2^0;
 sbit led2 = P2^1;
-unsigned char up_array[4] = {0, 0, 0, 0};
-unsigned char down_array[4] = {0, 0, 0, 0};
+unsigned char up_array[5] = {0, 0, 0, 0, 0};
+unsigned char down_array[5] = {0, 0, 0, 0, 0};
 
 void btn_isr(void);
 void delay(int value); 
