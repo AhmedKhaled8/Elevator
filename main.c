@@ -51,9 +51,8 @@ void main()
 {
     int_INIT();
 	init();    // int_INIT();
-    P1 = 0xff ; // input 
+    P1 = 0x3f ; // input 
 
-	//initialize button
 	seven_seg_vinit('2');
 	seven_seg_write('2', 0);
 	initDCMotor('3', 5, 6, 7);
@@ -75,17 +74,15 @@ void main()
 
 	// LEDs to check button Readings
 	
-	LED_vInit('1', 0);
-	LED_vInit('1', 1);
-	LED_vInit('1', 2);
-	LED_vInit('1', 3);
+	LED_vInit('0', 6);
+	LED_vInit('0', 7);
+	LED_vInit('3', 4);
 	
 
-	LED_vTurnOff('1', 0);
-	LED_vTurnOff('1', 1);
-	LED_vTurnOff('1', 2);
-	LED_vTurnOff('1', 3);
-
+	LED_vTurnOff('0', 6); //UP
+	LED_vTurnOff('0', 7); //WAIT
+	LED_vTurnOff('3', 4); //DOWN
+	
 
 	while(1)
 	{
@@ -150,11 +147,11 @@ char goingUp()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('1', 0);
+		LED_vTurnOn('0', 6);
 	}
 	else
 	{
-		LED_vTurnOff('1', 0);
+		LED_vTurnOff('0', 6);
 	}
 	return state;
 }
@@ -174,11 +171,11 @@ char goingDown()
 	}
 	if (state == 1)
 	{
-		LED_vTurnOn('1', 2);
+		LED_vTurnOn('3', 4);
 	}
 	else
 	{
-		LED_vTurnOff('1', 2);
+		LED_vTurnOff('3', 4);
 	}
 	return state;
 }
@@ -266,9 +263,9 @@ void timer1_ISR (void) interrupt 3
 		{
 			if(totalUpSelected[currentFloor] == 1)
 			{
-				LED_vTurnOn('1', 1);
+				LED_vTurnOn('0', 6);
 				delay(5);
-				LED_vTurnOff('1', 1);
+				LED_vTurnOff('0', 6);
 				totalUpSelected[currentFloor]=0;
 			}
 		}
